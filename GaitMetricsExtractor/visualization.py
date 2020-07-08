@@ -68,6 +68,7 @@ def showCharts(
     plt.show()
 
 
+### DEPRECRATED
 def showCharts_freq(
     ranges,
     data_scale,
