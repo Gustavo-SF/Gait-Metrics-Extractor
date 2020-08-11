@@ -8,5 +8,13 @@ setuptools.setup(
     description="Package dedicated to accelerometer gait metrics extraction.",
     url="https://github.com/gustavo-sf/gaitmetricsextractor",
     packages=setuptools.find_packages(),
+    install_requires=[
+        'pandas',
+        'matplotlib',
+        'numpy',
+        'pywavelets',
+        'scipy',
+        'peakutils',
+    ],
     python_requires='>=3.6',
 )

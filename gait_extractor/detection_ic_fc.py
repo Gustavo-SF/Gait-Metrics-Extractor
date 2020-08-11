@@ -81,7 +81,7 @@ def optimize_IC_FCs(IC, FC):
     for k in range(max(len(IC), len(FC))):
         try:
             new_FC[k]
-        except: # TODO : Refactor to avoid try except
+        except:
             break
         for i in IC:
             if (i > new_FC[k]): # & (i > (new_IC[k] + 25)) & (i < (new_IC[k] + 225)):
@@ -89,7 +89,7 @@ def optimize_IC_FCs(IC, FC):
                 break
         try:
             new_IC[k + 1]
-        except: # TODO : Refactor to avoid try except
+        except:
             break
         for j in FC:
             if (j > new_IC[k + 1]): # & (j > (new_FC[k] + 25)) & (j < (new_FC[k] + 225)):

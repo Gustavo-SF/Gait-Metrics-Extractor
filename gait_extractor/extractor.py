@@ -1,12 +1,41 @@
 import pandas as pd
 import time
+from matplotlib import pyplot as plt
 
-from .walking_bouts import *
-from .signal_processing import *
-from .detection_ic_fc import *
-from .metrics_extraction import *
-from .metrics_table import *
-from .visualization import *
+from .walking_bouts import (
+    runWalkingBoutDetection,
+    applyOffsetRemove,
+    applyFilter,
+)
+from .signal_processing import (
+    H_V_orth_sys,
+    detrend_data,
+    butter_bp_data,
+    butter_bandpass_filter,
+
+)
+from .detection_ic_fc import (
+    integrate_Hz,
+    IC_FC_detection,
+    optimize_IC_FCs,
+    identify_scale
+)
+from .metrics_extraction import (
+    get_gait_stride,
+    get_cadence,
+    get_gait_step,
+    get_gait_stepLen,
+    get_gait_strideLen,
+    get_step_velocity,
+    get_gait_stance,
+    get_gait_swing,
+    get_gait_doublesupport,
+    variability_b,
+    asymmetry
+)
+
+from .metrics_table import create_table
+from .visualization import visualize_signal, normalize
 
 class extractor:
     def __init__(self, file_path):
