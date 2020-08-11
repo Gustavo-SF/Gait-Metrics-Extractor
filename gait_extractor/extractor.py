@@ -7,6 +7,7 @@ from .walking_bouts import (
     applyOffsetRemove,
     applyFilter,
 )
+
 from .signal_processing import (
     H_V_orth_sys,
     detrend_data,
@@ -14,12 +15,13 @@ from .signal_processing import (
     butter_bandpass_filter,
 
 )
-from .detection_ic_fc import (
+from .detection_icfc import (
     integrate_Hz,
     IC_FC_detection,
     optimize_IC_FCs,
     identify_scale
 )
+
 from .metrics_extraction import (
     get_gait_stride,
     get_cadence,

@@ -2,17 +2,17 @@
 
 1. To install package add folder to your working directory.
 
-2. Run:
+2. Go inside the folder and run:
 
-`pip install -e GaitMetricsExtraction/`
+`pip install -e .`
 
 3. Now you can import the constructor.
 
-`from GaitMetricsExtractor.GaitMetricsExtractor import GaitMetricsExtractor`
+`from gait_extractor import extractor`
 
 4. Give a DataFrame when initializing the class
 
-`gme = GaitMetricsExtraction(df)`
+`gme = extractor(df)`
 
 5. Extract Metrics
 

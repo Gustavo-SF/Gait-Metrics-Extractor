@@ -3,8 +3,14 @@ import numpy as np
 from matplotlib import pyplot as plt
 import os
 from .signal_processing import butter_bp_data
-from .visualization import showCharts, showCharts_freq
-from .detection_ic_fc import integrate_Hz, identify_scale
+from .visualization import (
+    showCharts,
+    showCharts_freq
+    )
+from .detection_icfc import (
+    integrate_Hz, 
+    identify_scale
+    )
 
 
 def applyOffsetRemove(df):
