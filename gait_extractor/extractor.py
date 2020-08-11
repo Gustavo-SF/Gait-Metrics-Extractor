@@ -8,7 +8,7 @@ from .metrics_extraction import *
 from .metrics_table import *
 from .visualization import *
 
-class GaitMetricsExtractor:
+class extractor:
     def __init__(self, file_path):
         self.data = pd.read_csv(file_path, header=None)
     def filter_for_activity(self, window, ssd_thres, minimum_wb):
@@ -42,7 +42,7 @@ class GaitMetricsExtractor:
         cut_frequency = 20 # Hz
         order = 4
         btype = 'low'
-        data_w = butter_bp_data(self.data,cut_frequency,fs,order,btype)
+        _ = butter_bp_data(self.data,cut_frequency,fs,order,btype)
         
         self.vz = integrate_Hz(self.data[1], fs, True)
         index = identify_scale(self.vz)
@@ -64,7 +64,7 @@ class GaitMetricsExtractor:
         cadence = get_cadence(self.IC)
         step_avg, step = get_gait_step(self.IC)
         steplen_avg, steplen = get_gait_stepLen(h, self.IC, patient_height)
-        strideLen_avg, strideLen = get_gait_strideLen(steplen)
+        strideLen_avg, _ = get_gait_strideLen(steplen)
         stepv_avg, stepv = get_step_velocity(steplen, step)
         stance_avg, stance = get_gait_stance(self.IC, self.FC)
         swing_avg, swing = get_gait_swing(stance, stride)
