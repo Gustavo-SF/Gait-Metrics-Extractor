@@ -5,4 +5,4 @@ from . import metrics_extraction
 from . import metrics_table
 from . import visualization
 
-from .extractor import extractor
+from .Extractor import Extractor

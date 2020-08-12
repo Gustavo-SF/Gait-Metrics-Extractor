@@ -39,9 +39,14 @@ from .metrics_extraction import (
 from .metrics_table import create_table
 from .visualization import visualize_signal, normalize
 
-class extractor:
-    def __init__(self, file_path):
-        self.data = pd.read_csv(file_path, header=None)
+class Extractor:
+    def __init__(self, file):
+        if type(file) == str:
+            self.data = pd.read_csv(file, header=None)
+        elif type(file) == pd.DataFrame:
+            self.data = file
+        else:
+            print("file should be a string path or a dataframe.")
     def filter_for_activity(self, window, ssd_thres, minimum_wb):
         data_wb = self.data.copy()
         applyOffsetRemove(data_wb)
