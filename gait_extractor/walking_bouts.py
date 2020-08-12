@@ -4,8 +4,7 @@ from matplotlib import pyplot as plt
 import os
 from .signal_processing import butter_bp_data
 from .visualization import (
-    showCharts,
-    showCharts_freq
+    showCharts
     )
 from .detection_icfc import (
     integrate_Hz, 
@@ -14,9 +13,10 @@ from .detection_icfc import (
 
 
 def applyOffsetRemove(df):
-    df[1] = np.subtract(df[1], np.average(df[1]))
-    df[2] = np.subtract(df[2], np.average(df[2]))
-    df[3] = np.subtract(df[3], np.average(df[3]))
+    df.iloc[:,1] = np.subtract(df[1], np.average(df[1]))
+    df.iloc[:,2] = np.subtract(df[2], np.average(df[2]))
+    df.iloc[:,3] = np.subtract(df[3], np.average(df[3]))
+    return df
 
 
 def applyFilter(df):
@@ -24,6 +24,7 @@ def applyFilter(df):
     lower_than = 17 # Hz
     order = 2
     df = butter_bp_data(df, lower_than, fs, order, 'low')
+    return df
 
 
 def runWalkingBoutDetection(

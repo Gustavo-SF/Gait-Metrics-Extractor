@@ -48,7 +48,7 @@ def IC_FC_detection(data, scale=10, thres=0.65):
     return final, final_2, IC, FC
 
 
-def optimize_IC_FCs(IC, FC):
+def optimize_IC_FCs(IC, FC, time_restraint = False):
     """
     Optimization function does the following steps:
 
@@ -84,17 +84,27 @@ def optimize_IC_FCs(IC, FC):
         except:
             break
         for i in IC:
-            if (i > new_FC[k]): # & (i > (new_IC[k] + 25)) & (i < (new_IC[k] + 225)):
-                new_IC.append(i)
-                break
+            if time_restraint:
+                if (i > new_FC[k]) & (i > (new_IC[k] + 25)) & (i < (new_IC[k] + 225)):
+                    new_IC.append(i)
+                    break
+            else:
+                if (i > new_FC[k]):
+                    new_IC.append(i)
+                    break
         try:
             new_IC[k + 1]
         except:
             break
         for j in FC:
-            if (j > new_IC[k + 1]): # & (j > (new_FC[k] + 25)) & (j < (new_FC[k] + 225)):
-                new_FC.append(j)
-                break
+            if time_restraint:
+                if (j > new_IC[k + 1]) & (j > (new_FC[k] + 25)) & (j < (new_FC[k] + 225)):
+                    new_FC.append(j)
+                    break
+            else:
+                if (j > new_IC[k + 1]):
+                    new_FC.append(j)
+                    break
     if (len(new_IC) - 1) == (len(new_FC)):
         new_IC = new_IC[:-1]
 
