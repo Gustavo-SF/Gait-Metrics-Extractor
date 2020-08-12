@@ -66,36 +66,3 @@ def showCharts(
     plt.legend(loc=1)
     plt.tight_layout()
     plt.show()
-
-
-### DEPRECRATED
-def showCharts_freq(
-    ranges,
-    data_scale,
-    scale_threshold,
-    ):
-
-    Ln = len(data_scale)
-    xAxis = np.arange(Ln)
-
-    # data_freq = list()
-
-    # wavelet = ContinuousWavelet("gaus2")
-    # for i in range(len(data_scale)):
-    #     data_freq.append(scale2frequency(wavelet, data_scale[i])/0.01)
-
-    # freq_threshold = scale2frequency(wavelet, scale_threshold)/0.01
-
-    plt.figure()
-    plt.title('Walking Bouts over Scale')
-    plt.scatter(xAxis, data_scale ,s=0.7,label = 'Scale', color = "green")
-    plt.axhline(y = scale_threshold, label = 'Scale Threshold', color='red')
-
-    for pair in ranges:
-        if(pair == ranges[-1]):
-            plt.axvspan(pair[0], pair[1], facecolor='0.05', alpha = 0.2, zorder=-100,label = 'Walking bout')
-        else:
-            plt.axvspan(pair[0], pair[1], facecolor='0.05', alpha = 0.2, zorder=-100)
-    plt.legend(loc=1)
-    plt.tight_layout()
-    plt.show()
