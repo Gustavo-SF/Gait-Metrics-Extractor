@@ -59,7 +59,7 @@ def detrend_data(data):
     It applies to the x,y,z axis of the accelerometer.
     """
     for i in range(1, 4):
-        data[i] = signal.detrend(data[i])
+        data.iloc[:,i] = signal.detrend(data[i])
     return data
 
 
@@ -95,5 +95,5 @@ def butter_bp_data(data, lower_than, fs, order, btype):
     with 4 dimensions, supposing that the 1st is the time dimension.
     """
     for i in range(1, 4):
-        data[i] = butter_bandpass_filter(data[i], lower_than, fs, order, btype)
+        data.iloc[:,i] = butter_bandpass_filter(data[i], lower_than, fs, order, btype)
     return data
