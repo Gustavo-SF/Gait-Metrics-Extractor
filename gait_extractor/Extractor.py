@@ -68,7 +68,7 @@ class Extractor:
         except:
             print("No movement detected")
         
-    def extract_metrics(self, patient_height, start = 0, end = 0.01):
+    def extract_metrics(self, patient_height, start = 0, end = 0.01, thres = 0.0):
         self.data = self.data[start*100:int(end*-100)]
         self.data = H_V_orth_sys(self.data)
         self.data = detrend_data(self.data)
@@ -86,9 +86,12 @@ class Extractor:
         # In case the patient is limping
         if index > 35:
             index = index / 2
+
+        if index < 8: # less than 8 is too fast
+        	index = 8
             
         scale = index 
-        thres = 0.0  # Can be adjusted to 0.65 for more complicated scenarios.
+        thres = thres  # Can be adjusted to 0.65 for more complicated scenarios.
 
         self.cwt1, self.cwt2, IC, FC = IC_FC_detection(self.vz, scale, thres)
         self.IC, self.FC = optimize_IC_FCs(IC, FC)
@@ -148,33 +151,33 @@ class Extractor:
             steplen_asy,
         ]
         values = {
-        "Gait Velocity": round(metrics[0],2),
-        "Cadence": round(metrics[1],2),
-        "Stride length": round(metrics[5],2),
-        "Stride velocity": round(metrics[6],2),
-        "Step length": round(metrics[8],2),
-        "Step velocity": round(metrics[9],2),
-        "Stance phase": round(metrics[2],2),
-        "Swing phase": round(metrics[3],2),
-        "Double support phase": round(metrics[4],2),
-        "Step time": round(metrics[7],2),
-        "Stance time": round(metrics[10],2),
-        "Swing time": round(metrics[11],2),
-        "Double support time": round(metrics[12],2),
-        "Stride time variability": round(metrics[13],4),
-        "Step length variability": round(metrics[14],4),
-        "Step time variability": round(metrics[15],4),
-        "Step velocity variability": round(metrics[16],4),
-        "Stance time variability": round(metrics[17],4),
-        "Swing time variability": round(metrics[18],4),
-        "Double support variability": round(metrics[19],4),
-        "Stride time asymetry": round(metrics[20],4),
-        "Step time asymetry": round(metrics[21],4),
-        "Stance time asymetry": round(metrics[22],4),
-        "Swing time asymetry": round(metrics[23],4),
-        "Step length asymetry": round(metrics[24],4),
+        "Gait Velocity": metrics[0],
+        "Cadence": metrics[1],
+        "Stride length": metrics[5],
+        "Stride velocity": metrics[6],
+        "Step length": metrics[8],
+        "Step velocity": metrics[9],
+        "Stance phase": metrics[2],
+        "Swing phase": metrics[3],
+        "Double support phase": metrics[4],
+        "Step time": metrics[7],
+        "Stance time": metrics[10],
+        "Swing time": metrics[11],
+        "Double support time": metrics[12],
+        "Stride time variability": metrics[13],
+        "Step length variability": metrics[14],
+        "Step time variability": metrics[15],
+        "Step velocity variability": metrics[16],
+        "Stance time variability": metrics[17],
+        "Swing time variability": metrics[18],
+        "Double support variability": metrics[19],
+        "Stride time asymetry": metrics[20],
+        "Step time asymetry": metrics[21],
+        "Stance time asymetry": metrics[22],
+        "Swing time asymetry": metrics[23],
+        "Step length asymetry": metrics[24],
         "Number of Steps": sum(self.IC),
-        "Distance Predicted of Walk": round(metrics[9]*len(self.data)/100, 4),
+        "Distance Predicted of Walk": metrics[9]*len(self.data)/100,
         }
         self.table = create_table(**values)
         
