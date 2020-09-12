@@ -21,8 +21,8 @@ You can replace `.` by the location of the folder if you want to install it from
 ## Using Gait Metrics Extractor
 
 The package consists of:
-1. A Class which allows to do a simple filtering of activity, extracting metrics, and visualizing some graphs
-2. Access to the multiple functions used for metrics extraction, from signal processing to calculating the metrics themselves.
++ A Class which allows to do a simple filtering of activity, extracting metrics, and visualizing some graphs
++ Access to the multiple functions used for metrics extraction, from signal processing to calculating the metrics themselves.
 
 1. You can import the constructor in the following way:
 
@@ -34,7 +34,7 @@ The package consists of:
 or
 `gme = Extractor('data/data.csv')`
 
-5. Extract Metrics
+3. Extract Metrics
 In this case it takes 3 parameters. 
 * The `patient_height` which should be *always* provided.
 * `start` and `end` to adjust the time to start the bout and the time to end. Both must be positive values and are given in seconds.
@@ -46,14 +46,14 @@ Note: IC=Initial Contact points FC=Final Contact points
 
 Ideally we want to avoid using the start, end and threshold. In case they are used, they should be supervised with the help of the visualization functions.
 
-6. Access metrics table
+4. Access metrics table
 After extracting the metrics, they are not immediately visible. For this we must access the table in the following way:
 
 `gme.table`
 
 The table provides 25 gait metrics, the number of steps found, which is equivalent to the number of ICs, and the predicted distance walked, which is the gait velocity times the number of time-length of the bout.
 
-7. Visualize the signal
+5. Visualize the signal
 
 There are three options to visualize the signal. It is advised to visualize the signal every time a new dataset is used, as there can be outliers in patterns of walking which lead to problems with the metrics.
 
