@@ -49,6 +49,9 @@ def showCharts(
     data_std,
     ssd_threshold,
     ):
+    """
+    Not used in the Extractor Class but can be used with runWalkingBoutDetection function by setting plot_this=True.
+    """
 
     Ln = len(data_std)
     xAxis = np.arange(Ln)

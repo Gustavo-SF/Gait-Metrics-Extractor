@@ -41,6 +41,10 @@ from .visualization import visualize_signal, normalize
 
 class Extractor:
     def __init__(self, file):
+        """
+        Give a DataFrame, or the location of the data as a string, 
+        when initializing the class
+        """
         if type(file) == str:
             self.data = pd.read_csv(file, header=None)
         elif type(file) == pd.DataFrame:
@@ -48,6 +52,10 @@ class Extractor:
         else:
             print("file should be a string path or a dataframe.")
     def filter_for_activity(self, window, ssd_thres, minimum_wb):
+        """
+        It is possible to filter the bout for activity. 
+        This will select the first range with activity.
+        """
         data_wb = self.data.copy()
         applyOffsetRemove(data_wb)
         applyFilter(data_wb)
@@ -69,6 +77,14 @@ class Extractor:
             print("No movement detected")
         
     def extract_metrics(self, patient_height, start = 0, end = 0.01, thres = 0.0):
+        """
+        Extract Metrics In this case it takes 3 parameters:
+        * The patient_height which should be always provided.
+        * start and end to adjust the time to start the bout and the time to end. 
+        Both must be positive values and are given in seconds.
+        * thres, that establishes a threshold for identifying ICs and FCs 
+        in case there is noise in the data and we are only interested in the bigger peaks for identifying ICs and FCs.
+        """
         self.data = self.data[start*100:int(end*-100)]
         self.data = H_V_orth_sys(self.data)
         self.data = detrend_data(self.data)
@@ -182,6 +198,12 @@ class Extractor:
         self.table = create_table(**values)
         
     def IC_FC_visualization(self):
+        """
+        To ensure that we are detecting the right ICs and FCs, this visualization allows 
+        to see and adjust accordingly the threshold in the extract metrics function. 
+        This should happen in case a person is positioning himself between walking 
+        bouts which leads to false positives of ICs and FCs        
+        """
         legend = ['1st CWT','2nd CWT','IC','FC']
         title = 'Optimized ICs and FCs detection'
         IC_values = [self.IC,normalize(self.cwt1)[self.IC]]
@@ -189,11 +211,20 @@ class Extractor:
         visualize_signal(legend, title, normalize(self.cwt1), normalize(self.cwt2), IC = IC_values, FC = FC_values)
     
     def visualize_signal(self):
+        """
+        To simply visualize the raw signal.
+        """
         plt.figure()
         plt.title('Accelerometer Signal')
         plt.plot(range(len(self.data)), self.data[1])
     
     def freq_optimization(self):
+        """
+        We can visualize the optimization of the frequency. 
+        It should contain one single peak, which is the main frequency of the signal. 
+        Visualizing other than one normal peak, can mean that there is some complicated 
+        walking pattern which might be leading to wront metrics.
+        """
         index = identify_scale(self.vz, True)
         # In case the patient is limping
         if index > 35:

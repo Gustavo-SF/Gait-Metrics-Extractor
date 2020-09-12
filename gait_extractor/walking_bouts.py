@@ -13,6 +13,11 @@ from .detection_icfc import (
 
 
 def applyOffsetRemove(df):
+    """
+    Based on Lyons 2005.
+    To run a walking bout detection, this function is first used to center the raw signal data.
+    This happens by subtracting the average of the signal.
+    """
     df.iloc[:,1] = np.subtract(df[1], np.average(df[1]))
     df.iloc[:,2] = np.subtract(df[2], np.average(df[2]))
     df.iloc[:,3] = np.subtract(df[3], np.average(df[3]))
@@ -20,6 +25,11 @@ def applyOffsetRemove(df):
 
 
 def applyFilter(df):
+    """
+    Based on Lyons 2005.
+    We eliminate high frequencies. 
+    The lower_than variable should not be too low, else it will affect the bout filter.
+    """
     fs = 100 # Hz
     lower_than = 17 # Hz
     order = 2
@@ -34,6 +44,16 @@ def runWalkingBoutDetection(
     minimum = 50,
     plot_this = False,
     ):
+    """
+    Main function for running the walking bout detection.
+    It identifies activity in the signal by classifying as activity all the parts of the signal that surpass a given threshold.
+
+    * ssd_threshold: The threshold to be used to identify the activity
+    * data: the data we are using to detect activity in
+    * windowSize: The windowSize to calculate the combined standard deviation.
+    * minimum: The bouts are only considered bouts in case they are a bigger size than this number.
+    * plot_this: In case we want to visualize the detection of activity.
+    """
     df1 = comb_std_rolling(data, windowSize)
     ranges_ww = calcSegments(windowSize, df1 ,ssd_threshold, minimum)
     if plot_this:
